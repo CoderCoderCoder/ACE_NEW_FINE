@@ -17,7 +17,7 @@ public class GoalPiece : MonoBehaviour {
     {
         if (col.collider.tag.Equals("Car"))
         {
-            col.collider.GetComponent<CarController>().NewLap();           
+            col.collider.GetComponent<CarController>().FinishedTrack();           
         }
     }
 }
