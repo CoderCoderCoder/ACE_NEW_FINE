@@ -35,6 +35,7 @@ public class SimpleEvaluator : IPhenomeEvaluator<IBlackBox> {
 
             optimizer.Evaluate(box);
             yield return new WaitForSeconds(optimizer.TrialDuration);
+            Debug.Log("evaluating");
             optimizer.StopEvaluation(box);
             float fit = optimizer.GetFitness(box);
            

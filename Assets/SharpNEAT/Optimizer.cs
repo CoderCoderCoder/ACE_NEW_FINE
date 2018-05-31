@@ -66,7 +66,7 @@ public class Optimizer : MonoBehaviour {
             timeLeft = updateInterval;
             accum = 0.0f;
             frames = 0;
-            //   print("FPS: " + fps);
+            trackLoader.neatIterations++;
             if (fps < 10)
             {
                 Time.timeScale = Time.timeScale - 1;
@@ -84,7 +84,7 @@ public class Optimizer : MonoBehaviour {
         _ea.UpdateEvent += new EventHandler(ea_UpdateEvent);
         _ea.PausedEvent += new EventHandler(ea_PauseEvent);
 
-        var evoSpeed = 1;
+        var evoSpeed = 100;
 
         Time.timeScale = evoSpeed;       
         _ea.StartContinue();

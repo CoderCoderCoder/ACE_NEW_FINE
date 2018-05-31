@@ -8,10 +8,14 @@ public class TrackLoader : MonoBehaviour {
     public float timeLeft;
     private int currentTrack = 0;
     public bool started = false;
+    private int trackManIterations = 0;
+    public int neatIterations = 0;
+
 
 	private void FixedUpdate()
 	{
         if (!started) return;
+        if (trackManIterations > neatIterations) return;
         timeLeft -= Time.deltaTime;
         if(timeLeft <= 0)
         {
@@ -22,7 +26,10 @@ public class TrackLoader : MonoBehaviour {
             timeLeft = trackTime;
             //if currentTrack > length of track pop then generate next pop 
             //else ...
+            trackManIterations++;
             loadTrack(currentTrack);
+            print("finished");
+
         }
 	}
 
