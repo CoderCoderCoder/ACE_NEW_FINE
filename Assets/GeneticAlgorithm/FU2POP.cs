@@ -5,7 +5,7 @@ using UnityEngine;
 public class FU2POP
 {
 
-    public static int pop_size = 10;
+    public static int pop_size = 20;
     public List<TrackChromosome> pop;
 
     public List<TrackChromosome> feasable = new List<TrackChromosome>();

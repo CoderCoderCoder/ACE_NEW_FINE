@@ -35,7 +35,7 @@ public class TrackLoader : MonoBehaviour {
             updateTrackFitness();
 
             timeLeft = trackTime;
-            if(currentTrack > trackPopulation.feasable.Count)
+            if(currentTrack >= trackPopulation.feasable.Count)
             {
                 //if currentTrack > length of track pop then generate next pop 
             } else {
