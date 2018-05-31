@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class TrackLoader : MonoBehaviour {
+    
     public float trackTime;
     public float timeLeft;
     private int currentTrack = 0;
@@ -12,12 +13,14 @@ public class TrackLoader : MonoBehaviour {
     public int neatIterations = 0;
     public FU2POP trackPopulation;
 
+    public Optimizer optimizer;
     public GameObject[] trackPrefabs;
     List<GameObject> currentTrackSegements = new List<GameObject>();
 
 	public void Awake()
 	{
         trackPopulation = new FU2POP(15);
+        optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
 
         loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
 	}
@@ -39,6 +42,7 @@ public class TrackLoader : MonoBehaviour {
             {
                 //if currentTrack > length of track pop then generate next pop 
                 currentTrack = 0;
+                optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
             } else {
                 loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
             }
@@ -77,7 +81,7 @@ public class TrackLoader : MonoBehaviour {
 
         int[] startingCoords = { 0, 0 };
         coords.Add(startingCoords);
-
+        int id = 0;
         foreach(int trackElemt in track)
         {
             int[] latestCoords = coords[coords.Count-1];
@@ -88,6 +92,15 @@ public class TrackLoader : MonoBehaviour {
             else if (entryDir == 3) rotation = Quaternion.Euler(0f,270f, 0f);
 
             GameObject newTrack = Instantiate(trackPrefabs[trackElemt], new Vector3(latestCoords[0]*10, 0, latestCoords[1]*10), rotation);
+            for (int i = 0; i < newTrack.transform.GetChild(0).childCount; i++)
+            {
+                var child = newTrack.transform.GetChild(0).GetChild(i);
+                if(child.name == "Road"){
+                    child.GetComponent<RoadPiece>().PieceNumber = id;
+                }       
+            }
+                       
+            id++;
             currentTrackSegements.Add(newTrack);
 
             int[] nextCoords = new int[2];
