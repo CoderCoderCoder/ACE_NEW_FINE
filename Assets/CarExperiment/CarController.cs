@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SharpNeat.Phenomes;
+using System.Collections.Generic;
 
 public class CarController : UnitController {
     public SimpleEvaluator evaluator;
@@ -13,6 +14,7 @@ public class CarController : UnitController {
     bool MovingForward = true;
     bool IsRunning;
     public float SensorRange = 10;
+    public List<float> fitness = new List<float>();
     int WallHits; 
     IBlackBox box;
 
@@ -110,23 +112,33 @@ public class CarController : UnitController {
 
     public void FinishedTrack()
     {    
-        GameObject eval = GameObject.Find("Evaluator");
-        float timeLeft = eval.GetComponent<Optimizer>().timeLeft;
-        float totalTime = eval.GetComponent<Optimizer>().TrialDuration;
+        GameObject eval = GameObject.Find("TrackLoader");
+        float timeLeft = eval.GetComponent<TrackLoader>().timeLeft;
+        float totalTime = eval.GetComponent<TrackLoader>().trackTime;
         timeCompleted = totalTime / (totalTime - timeLeft);
     }
 
     public override float GetFitness() 
     {
-        int piece = CurrentPiece;
-        if (CurrentPiece == 0)
+        float total = 0.0f;
+
+        foreach(float fit in fitness)
         {
-            piece = 17;
+            total += fit;
         }
+        if (fitness.Count > 0) return total /= fitness.Count;
+        else return 0f;
+
+    }
+
+    public void storeCurrentTrackFitness()
+    {
+        print("storing current fitness");
+        int piece = CurrentPiece;
 
         progress = CurrentPiece / 14f;
 
-        return timeCompleted + progress;
+        fitness.Add(timeCompleted + progress);
     }
 
     void OnCollisionEnter(Collision collision)

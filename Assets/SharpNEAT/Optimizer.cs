@@ -54,8 +54,6 @@ public class Optimizer : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-      //  evaluationStartTime += Time.deltaTime;
-
         timeLeft -= Time.deltaTime;
         accum += Time.timeScale / Time.deltaTime;
         ++frames;
@@ -83,9 +81,8 @@ public class Optimizer : MonoBehaviour {
         _ea.UpdateEvent += new EventHandler(ea_UpdateEvent);
         _ea.PausedEvent += new EventHandler(ea_PauseEvent);
 
-        var evoSpeed = 100;
+        var evoSpeed = 1;
 
-     //   Time.fixedDeltaTime = 0.045f;
         Time.timeScale = evoSpeed;       
         _ea.StartContinue();
         EARunning = true;
@@ -140,14 +137,14 @@ public class Optimizer : MonoBehaviour {
         
     }
 
-    public void StopEA()
-    {
+    //public void StopEA()
+    //{
 
-        if (_ea != null && _ea.RunState == SharpNeat.Core.RunState.Running)
-        {
-            _ea.Stop();
-        }
-    }
+    //    if (_ea != null && _ea.RunState == SharpNeat.Core.RunState.Running)
+    //    {
+    //        _ea.Stop();
+    //    }
+    //}
 
     public void Evaluate(IBlackBox box)
     {
@@ -166,41 +163,41 @@ public class Optimizer : MonoBehaviour {
         Destroy(ct.gameObject);
     }
 
-    public void RunBest()
-    {
-        Time.timeScale = 1;
+    //public void RunBest()
+    //{
+    //    Time.timeScale = 1;
 
-        NeatGenome genome = null;
-
-
-        // Try to load the genome from the XML document.
-        try
-        {
-            using (XmlReader xr = XmlReader.Create(champFileSavePath))
-                genome = NeatGenomeXmlIO.ReadCompleteGenomeList(xr, false, (NeatGenomeFactory)experiment.CreateGenomeFactory())[0];
+    //    NeatGenome genome = null;
 
 
-        }
-        catch (Exception e1)
-        {
-            // print(champFileLoadPath + " Error loading genome from file!\nLoading aborted.\n"
-            //						  + e1.Message + "\nJoe: " + champFileLoadPath);
-            return;
-        }
+    //    // Try to load the genome from the XML document.
+    //    try
+    //    {
+    //        using (XmlReader xr = XmlReader.Create(champFileSavePath))
+    //            genome = NeatGenomeXmlIO.ReadCompleteGenomeList(xr, false, (NeatGenomeFactory)experiment.CreateGenomeFactory())[0];
 
-        // Get a genome decoder that can convert genomes to phenomes.
-        var genomeDecoder = experiment.CreateGenomeDecoder();
 
-        // Decode the genome into a phenome (neural network).
-        var phenome = genomeDecoder.Decode(genome);
+    //    }
+    //    catch (Exception e1)
+    //    {
+    //        // print(champFileLoadPath + " Error loading genome from file!\nLoading aborted.\n"
+    //        //						  + e1.Message + "\nJoe: " + champFileLoadPath);
+    //        return;
+    //    }
 
-        GameObject obj = Instantiate(Unit, Unit.transform.position, Unit.transform.rotation) as GameObject;
-        UnitController controller = obj.GetComponent<UnitController>();
+    //    // Get a genome decoder that can convert genomes to phenomes.
+    //    var genomeDecoder = experiment.CreateGenomeDecoder();
 
-        ControllerMap.Add(phenome, controller);
+    //    // Decode the genome into a phenome (neural network).
+    //    var phenome = genomeDecoder.Decode(genome);
 
-        controller.Activate(phenome);
-    }
+    //    GameObject obj = Instantiate(Unit, Unit.transform.position, Unit.transform.rotation) as GameObject;
+    //    UnitController controller = obj.GetComponent<UnitController>();
+
+    //    ControllerMap.Add(phenome, controller);
+
+    //    controller.Activate(phenome);
+    //}
 
     public float GetFitness(IBlackBox box)
     {
@@ -217,14 +214,14 @@ public class Optimizer : MonoBehaviour {
         {
             StartEA();
         }
-        if (GUI.Button(new Rect(10, 60, 100, 40), "Stop EA"))
-        {
-            StopEA();
-        }
-        if (GUI.Button(new Rect(10, 110, 100, 40), "Run best"))
-        {
-            RunBest();
-        }
+        //if (GUI.Button(new Rect(10, 60, 100, 40), "Stop EA"))
+        //{
+        //    StopEA();
+        //}
+        //if (GUI.Button(new Rect(10, 110, 100, 40), "Run best"))
+        //{
+        //    RunBest();
+        //}
 
         GUI.Button(new Rect(10, Screen.height - 70, 100, 60), string.Format("Generation: {0}\nFitness: {1:0.00}", Generation, Fitness));
     }
