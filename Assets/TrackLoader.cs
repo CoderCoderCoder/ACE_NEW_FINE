@@ -7,9 +7,11 @@ public class TrackLoader : MonoBehaviour {
     public float trackTime;
     public float timeLeft;
     private int currentTrack = 0;
+    public bool started = false;
 
 	private void FixedUpdate()
 	{
+        if (!started) return;
         timeLeft -= Time.deltaTime;
         if(timeLeft <= 0)
         {

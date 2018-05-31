@@ -10,6 +10,8 @@ using System.IO;
 
 public class Optimizer : MonoBehaviour {
 
+    public TrackLoader trackLoader;
+
     const int NUM_INPUTS = 5;
     const int NUM_OUTPUTS = 2;
 
@@ -74,7 +76,8 @@ public class Optimizer : MonoBehaviour {
     }
 
     public void StartEA()
-    {        
+    {
+        trackLoader.started = true;
         _ea = experiment.CreateEvolutionAlgorithm(popFileSavePath);
         startTime = DateTime.Now;
 
