@@ -38,6 +38,7 @@ public class TrackLoader : MonoBehaviour {
             if(currentTrack >= trackPopulation.feasable.Count)
             {
                 //if currentTrack > length of track pop then generate next pop 
+                currentTrack = 0;
             } else {
                 loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
             }
@@ -48,7 +49,6 @@ public class TrackLoader : MonoBehaviour {
     private void updateCarFitness()
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
-        print(objects.Length);
         foreach(GameObject obj in objects)
         {
             obj.GetComponent<CarController>().storeCurrentTrackFitness();
@@ -179,6 +179,12 @@ public class TrackLoader : MonoBehaviour {
             }
             coords.Add(nextCoords);
         }
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
+        foreach (GameObject obj in objects)
+        {
+            obj.transform.position = Vector3.zero;
+            obj.transform.rotation = Quaternion.identity;
+        }
     }
 
     public static bool Check( TrackChromosome t)
@@ -197,12 +203,6 @@ public class TrackLoader : MonoBehaviour {
         foreach (int trackElemt in track)
         {
             int[] latestCoords = coords[coords.Count - 1];
-            Quaternion rotation = new Quaternion();
-            if (entryDir == 0) rotation = Quaternion.Euler(0f, 0f, 0f);
-            else if (entryDir == 1) rotation = Quaternion.Euler(0f, 90f, 0f);
-            else if (entryDir == 2) rotation = Quaternion.Euler(0f, 180f, 0f);
-            else if (entryDir == 3) rotation = Quaternion.Euler(0f, 270f, 0f);
-
             int[] nextCoords = new int[2];
 
             if (entryDir == 0)
