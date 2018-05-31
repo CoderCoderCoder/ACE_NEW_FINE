@@ -18,7 +18,8 @@ public class TrackLoader : MonoBehaviour {
 	public void Awake()
 	{
         trackPopulation = new FU2POP(15);
-        loadTrack(0);
+
+        loadTrack(trackPopulation.pop[currentTrack].GetGenes());
 	}
 
 
@@ -34,12 +35,13 @@ public class TrackLoader : MonoBehaviour {
             updateTrackFitness();
 
             timeLeft = trackTime;
-            //if currentTrack > length of track pop then generate next pop 
-            //else ...
+            if(currentTrack > trackPopulation.pop.Count)
+            {
+                //if currentTrack > length of track pop then generate next pop 
+            } else {
+                loadTrack(trackPopulation.pop[currentTrack].GetGenes());
+            }
             trackManIterations++;
-            loadTrack(currentTrack);
-            print("finished");
-
         }
 	}
 
@@ -59,16 +61,15 @@ public class TrackLoader : MonoBehaviour {
 
     }
 
-    private void loadTrack(int track)
+    private void loadTrack(int[] track)
     {
+        //0 = hard right, 1 = hard left, 2 = soft right, 3 = soft left, 4 = straight, 5 = end
         //remove old track
         for (int i = 0; i < currentTrackSegements.Count; i++)
         {
             Destroy(currentTrackSegements[i]);
         }
         currentTrackSegements.Clear();
-        //0 = hard right, 1 = hard left, 2 = soft right, 3 = soft left, 4 = straight, 5 = end
-        int[] trackArray = { 0, 1, 2, 3, 1, 2, 4, 5 };
 
         List<int[]> coords = new List<int[]>();
 
@@ -77,7 +78,7 @@ public class TrackLoader : MonoBehaviour {
         int[] startingCoords = { 0, 0 };
         coords.Add(startingCoords);
 
-        foreach(int trackElemt in trackArray)
+        foreach(int trackElemt in track)
         {
             int[] latestCoords = coords[coords.Count-1];
             Quaternion rotation = new Quaternion();
@@ -151,7 +152,7 @@ public class TrackLoader : MonoBehaviour {
                 else if (trackElemt == 4 || trackElemt == 5)
                 {
                     nextCoords[0] = latestCoords[0];
-                    nextCoords[1] = latestCoords[1]+1;
+                    nextCoords[1] = latestCoords[1]-1;
                     entryDir = 2;
                 }
             }else if (entryDir == 3)
@@ -176,14 +177,8 @@ public class TrackLoader : MonoBehaviour {
                     entryDir = 3;
                 }
             }
-
-
-
-
             coords.Add(nextCoords);
-          
         }
-        return;
     }
 
 }

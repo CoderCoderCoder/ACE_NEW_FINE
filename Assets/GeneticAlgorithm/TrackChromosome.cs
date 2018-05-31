@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrackChromosome{
 
-    private static int max_gene;
+    private static int max_gene = 4;
     private int[] genes;
     private float fitness;
     private bool is_feasable;
@@ -79,6 +79,11 @@ public class TrackChromosome{
             return -1;    
         }
         return this.genes[index];
+    }
+
+    public int[] GetGenes()
+    {
+        return this.genes;
     }
 
     public bool OutOfRange(int index){
