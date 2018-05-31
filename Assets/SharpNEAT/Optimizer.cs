@@ -15,7 +15,7 @@ public class Optimizer : MonoBehaviour {
 
     public int Trials;
     public float TrialDuration;
-    public float StoppingFitness;
+    //public float StoppingFitness;
     bool EARunning;
     string popFileSavePath, champFileSavePath;
 
@@ -26,7 +26,7 @@ public class Optimizer : MonoBehaviour {
 
     Dictionary<IBlackBox, UnitController> ControllerMap = new Dictionary<IBlackBox, UnitController>();
     private DateTime startTime;
-    private float timeLeft;
+    public float timeLeft;
     private float accum;
     private int frames;
     private float updateInterval = 12;
@@ -77,9 +77,6 @@ public class Optimizer : MonoBehaviour {
 
     public void StartEA()
     {        
-        Utility.DebugLog = true;
-        Utility.Log("Starting PhotoTaxis experiment");
-        // print("Loading: " + popFileLoadPath);
         _ea = experiment.CreateEvolutionAlgorithm(popFileSavePath);
         startTime = DateTime.Now;
 

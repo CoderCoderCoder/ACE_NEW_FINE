@@ -3,11 +3,13 @@ using System.Collections;
 using SharpNeat.Phenomes;
 
 public class CarController : UnitController {
-
+    public SimpleEvaluator evaluator;
     public float Speed = 5f;
     public float TurnSpeed = 180f;
     public int Lap = 1;
     public int CurrentPiece, LastPiece;
+    public float progress;
+    public float timeCompleted = 0;
     bool MovingForward = true;
     bool IsRunning;
     public float SensorRange = 10;
@@ -22,29 +24,6 @@ public class CarController : UnitController {
 	// Update is called once per frame
     void FixedUpdate()
     {
-        //grab the input axes
-        //var steer = Input.GetAxis("Horizontal");
-        //var gas = Input.GetAxis("Vertical");
-
-        ////if they're hittin' the gas...
-        //if (gas != 0)
-        //{
-        //    //take the throttle level (with keyboard, generally +1 if up, -1 if down)
-        //    //  and multiply by speed and the timestep to get the distance moved this frame
-        //    var moveDist = gas * speed * Time.deltaTime;
-
-        //    //now the turn amount, similar drill, just turnSpeed instead of speed
-        //    //   we multiply in gas as well, which properly reverses the steering when going 
-        //    //   backwards, and scales the turn amount with the speed
-        //    var turnAngle = steer * turnSpeed * Time.deltaTime * gas;
-
-        //    //now apply 'em, starting with the turn           
-        //    transform.Rotate(0, turnAngle, 0);
-
-        //    //and now move forward by moveVect
-        //    transform.Translate(Vector3.forward * moveDist);
-        //}
-
         // Five sensors: Front, left front, left, right front, right 
 
         if (IsRunning)
@@ -129,32 +108,25 @@ public class CarController : UnitController {
         this.IsRunning = true;
     }
 
-    public void NewLap()
-    {        
-        if (LastPiece > 2 && MovingForward)
-        {
-            Lap++;            
-        }
+    public void FinishedTrack()
+    {    
+        GameObject eval = GameObject.Find("Evaluator");
+        float timeLeft = eval.GetComponent<Optimizer>().timeLeft;
+        float totalTime = eval.GetComponent<Optimizer>().TrialDuration;
+        timeCompleted = totalTime / (totalTime - timeLeft);
     }
 
-    public override float GetFitness()
+    public override float GetFitness() 
     {
-        if (Lap == 1 && CurrentPiece == 0)
-        {
-            return 0;
-        }
         int piece = CurrentPiece;
         if (CurrentPiece == 0)
         {
             piece = 17;
         }
-        float fit = Lap * piece;// - WallHits * 0.2f;
-      //  print(string.Format("Piece: {0}, Lap: {1}, Fitness: {2}", piece, Lap, fit));
-        if (fit > 0)
-        {
-            return fit;
-        }
-        return 0;
+
+        progress = CurrentPiece / 14f;
+
+        return timeCompleted + progress;
     }
 
     void OnCollisionEnter(Collision collision)
