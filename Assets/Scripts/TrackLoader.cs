@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class TrackLoader : MonoBehaviour {
-    
+    public Camera mainCamera;
     public float trackTime;
     public float timeLeft;
     private int currentTrack = 0;
@@ -243,6 +243,19 @@ public class TrackLoader : MonoBehaviour {
             obj.transform.position = Vector3.zero;
             obj.transform.rotation = Quaternion.identity;
         }
+        //todo: Move camera
+        int minX = 0;
+        int minZ = 0;
+        int maxX = 0;
+        int maxZ = 0;
+        foreach(int[] coord in coords)
+        {
+            if (coord[0] < minX) minX = coord[0];
+            else if (coord[0] > maxX) maxX = coord[0];
+            else if (coord[1] < minZ) minX = coord[1];
+            else if (coord[1] > maxZ) maxZ = coord[1];
+        }
+        mainCamera.transform.position = new Vector3((maxX*10)-((Mathf.Abs(maxX-minX)/2)*10), 100, (maxZ*10) - ((Mathf.Abs(maxZ - minZ)/ 2) * 10));
     }
 
     public static bool Check( TrackChromosome t)
