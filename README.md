@@ -6,7 +6,7 @@ What is 'ACE! NEW! FINE?'? It is a 'brand new' (tm, full literature review not c
 
 "Adversarial Co-Evolution of Neuro-Evolution with Feasible-Infeasible Evolution"
 
-Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This was 100% because we fell it accurately explains our algorithm and not at all because it spells a few words. 
+Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This was 100% because we fell it accurately explains our algorithm and not at all because it spells a few words ... honest. 
 
 Let's break down the algorithm
 
@@ -16,6 +16,7 @@ Let's say you have a complicated problem, for example driving a car (no idea whe
 This is implemented by developing a fitness function for the track AI based on the performance of all cars and a fitness function for the car AI based on the performance of that car on all tracks. Formally:
 
 Ft = 1/Nc * SUM(Progress(ci,t) + 1-Time(ci,t))
+
 Fc = 1/Nt * SUM(Progress(c,ti) + Time(c,ti))
 
 Where Progress and Time are values between 0-1. Progress tracks how far along the track the car got and Time tracks for fast they completed the track (or 0 if incomplete). Both AIs are incentivised to have the cars finish the tracks but the track AI wants tracks which take the longest time to complete and the car AI wants cars which are as fast a possible. In this way, the challenge of the track should get easier when the AI is poor but once the cars finish the tracks the track AI is incentivised to make harder tracks until the cars can no-longer finish them.
