@@ -6,7 +6,7 @@ What is 'ACE! NEW! FINE?'? It is a 'brand new' (tm, full literature review not c
 
 "Adversarial Co-Evolution of Neuro-Evolution with Feasible-Infeasible Evolution"
 
-Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This was 100% because we fell it accurately explains our algorithm and not at all because it spells a few words ... honest. 
+Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This was 100% because we fell it accurately explains our algorithm and not at all because it spells a few words ... honest. We have been inspired by Julian's work on both neuro-evolution for Car Driving for the car driving AI and Feasible-Infeasible search for PCG for the track generating AI. We were also inspired by Arthur's discussion of curriculum learning to design the top-level architecture of the system.
 
 Let's break down the algorithm
 
@@ -21,10 +21,13 @@ Fc = 1/Nt * SUM(Progress(c,ti) + Time(c,ti))
 
 Where Progress and Time are values between 0-1. Progress tracks how far along the track the car got and Time tracks for fast they completed the track (or 0 if incomplete). Both AIs are incentivised to have the cars finish the tracks but the track AI wants tracks which take the longest time to complete and the car AI wants cars which are as fast a possible. In this way, the challenge of the track should get easier when the AI is poor but once the cars finish the tracks the track AI is incentivised to make harder tracks until the cars can no-longer finish them.
 
+Is this really curriculum learning? I am not sure, I am no expert in the field. But if it is not I like the idea of calling it Teacher-Student training where the Teacher (the track generating AI) is trying to understand how good the student (the car driving AI) is and adjust its content so it is always challenging the student but not by a lot, getting more difficulty as the student improves. 
+
 
 ## Neat Car Diving
 
 Car Driving is pretty neat, right? In this project, we use NEAT (Neuro-Evolution of Augmented Topologies) to control the cars. This code is based on UnityNEAT - https://github.com/lordjesus/UnityNEAT (itself an implementation of SharpNEAT). However, we have had to make changes to the core code to get it working in the way we wanted so we can't promise our implementation of UnityNEAT/SharpNEAT will work for you!
 
 ## Evolving tracks (FI2POP)
+
 
