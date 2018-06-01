@@ -33,7 +33,7 @@ Car Driving is pretty neat, right? In this project, we use NEAT (Neuro-Evolution
 ## Running this tech demo
 If you want to run this tech demo and see ACE! NEW! FINE? for yourself download this repo, open it in Unity (it was developed in 2018.1.1), load the scene (there is only one), run and then once the game has started press "Start EA". 
 
-##Team
+## Team
 
 Charlie Ringer
 
