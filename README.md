@@ -30,6 +30,14 @@ Car Driving is pretty neat, right? In this project, we use NEAT (Neuro-Evolution
 
 ## Evolving tracks (FI2POP)
 
+The FI2POP is an implementation of the Feasible-Infeasible Two-Population Genetic Algorithm ([paper](https://repository.upenn.edu/cgi/viewcontent.cgi?article=1269&context=oid_papers)). This algorithm can be used in scenarios where the population evolved is subject to some form of constraints. The algorithm takes care of evaluating the feasibility of each chromosome of the population and separate them in two different populations. To create the offspring of a new generation the chromosomes are mated within their own sub-population and then they are evaluated for feasibility and split again in the two sub-populations. This algorithm promote a richer gene variety since it stores in a separate population the infeasible but potentially rich and valuable genetic material without affecting the evolution of the feasable individuals. In such algorithm there's a constant migration of individuals from a sub-population to the other.
+
+The chromosome representation is basically a sequence of squared track portions: straight track, smooth turn and sharp turn.
+The evolution does the rest!
+
+But enough with the boring stuff!
+The FI2POP algorithm separates the broken tracks from the ones that we can actually play, the poor NEAT cars really want to show how they are poor at driving, right? Basically any chromosome that describes a track that overlaps with itself is labeld as infeasible and segregatet in the bad-boy club. To check for overlaps we start building the track from the first gene and then procede gene-by-gene, as soon as we find a gene that overlaps with a previous one, the chromosome is marked as unfeasible!
+
 ## Running this tech demo
 If you want to run this tech demo and see ACE! NEW! FINE? for yourself download this repo, open it in Unity (it was developed in 2018.1.1), load the scene (there is only one), run and then once the game has started press "Start EA". 
 
