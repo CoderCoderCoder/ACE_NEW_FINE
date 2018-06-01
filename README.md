@@ -28,7 +28,7 @@ Is this really curriculum learning? I am not sure, I am no expert in the field. 
 
 Car Driving is pretty neat, right? In this project, we use NEAT (Neuro-Evolution of Augmented Topologies) to control the cars. This code is based on UnityNEAT - https://github.com/lordjesus/UnityNEAT (itself an implementation of SharpNEAT). However, we have had to make changes to the core code to get it working in the way we wanted so we can't promise our implementation of UnityNEAT/SharpNEAT will work for you!
 
-## Evolving tracks (FI2POP)
+## Fine Tracks
 
 The FI2POP is an implementation of the Feasible-Infeasible Two-Population Genetic Algorithm ([paper](https://repository.upenn.edu/cgi/viewcontent.cgi?article=1269&context=oid_papers)). This algorithm can be used in scenarios where the population evolved is subject to some form of constraints. The algorithm takes care of evaluating the feasibility of each chromosome of the population and separate them in two different populations. To create the offspring of a new generation the chromosomes are mated within their own sub-population and then they are evaluated for feasibility and split again in the two sub-populations. This algorithm promote a richer gene variety since it stores in a separate population the infeasible but potentially rich and valuable genetic material without affecting the evolution of the feasable individuals. In such algorithm there's a constant migration of individuals from a sub-population to the other.
 
