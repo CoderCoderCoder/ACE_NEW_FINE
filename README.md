@@ -8,6 +8,14 @@ What is 'ACE? NEW? FINE?'? It is a 'brand new' (tm, full literature review not c
 
 Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This was 100% because we fell it accurately explains our algorithm and not at all because it spells a few words ... honest. We have been inspired by Julian's work on both neuro-evolution for Car Driving for the car driving AI and Feasible-Infeasible search for PCG for the track generating AI. We were also inspired by Arthur's discussion of curriculum learning to design the top-level architecture of the system.
 
+Here are some screen shots of the thing in action:
+
+COMING SOON!!!
+
+And here is a video (sped up):
+
+COMING SOON!!!
+
 Let's break down the algorithm:
 
 ## Ace Curriculum Learning
