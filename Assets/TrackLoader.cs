@@ -73,7 +73,8 @@ public class TrackLoader : MonoBehaviour {
         foreach (GameObject obj in objects)
         {
             fitness += obj.GetComponent<CarController>().lastProgress;
-            fitness += obj.GetComponent<CarController>().lastTimeCompleted;
+            float timeLastCompleted = obj.GetComponent<CarController>().lastTimeCompleted;
+            fitness += timeLastCompleted <= Mathf.Epsilon ? 0f : (1f - obj.GetComponent<CarController>().lastTimeCompleted);
         }
         fitness /= objects.Length;
         trackPopulation.feasable[currentTrack].SetFitness(fitness);
