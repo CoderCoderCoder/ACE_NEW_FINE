@@ -10,7 +10,7 @@ Yeah ... that is a lot of buzz words and a lot of the uses of "evolution". This 
 
 Here are some screen shots of the thing in action:
 
-COMING SOON!!!
+![tracks](https://github.com/ivanbravi/ace_new_fun/blob/master/Screenshots/0123.png)
 
 And here is a video (sped up):
 
