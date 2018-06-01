@@ -19,7 +19,7 @@ public class TrackLoader : MonoBehaviour {
 
 	public void Awake()
 	{
-        trackPopulation = new FU2POP(15);
+        trackPopulation = new FU2POP(20);
         optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
 
         loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
