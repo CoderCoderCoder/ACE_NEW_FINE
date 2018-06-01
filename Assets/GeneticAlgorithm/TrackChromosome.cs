@@ -15,9 +15,11 @@ public class TrackChromosome{
     }
 
     private void RandomInit(){
-        for (int i = 0; i < genes.Length; i++){
+        genes[0] = 4;
+        for (int i = 1; i < genes.Length-1; i++){
             genes[i] = RandomGene();
         }
+        genes[genes.Length - 1] = 5;
     }
 
     public void SetFeasable(bool is_feasable){
@@ -49,7 +51,7 @@ public class TrackChromosome{
     }
 
     public void Mutate(){
-        genes[Random.Range(0, genes.Length)] = RandomGene();         
+        genes[Random.Range(1, genes.Length-1)] = RandomGene();         
     }
 
     public static List<TrackChromosome> Crossover(TrackChromosome c1, TrackChromosome c2){
@@ -59,7 +61,6 @@ public class TrackChromosome{
         TrackChromosome new_c2 = new TrackChromosome(c2);
 
         int x_point = Random.Range(0, c1.genes.Length);
-
         for (int i = 0; i < c1.genes.Length; i++){
             if(i<x_point){
                 new_c1.genes[i] = c2.genes[i];

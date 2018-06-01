@@ -97,7 +97,6 @@ public class FU2POP
         List<TrackChromosome> new_pop = new List<TrackChromosome>();
 
 
-
         while (new_pop.Count != new_size)
         {
             TrackChromosome c1 = Selection(old_pop);
