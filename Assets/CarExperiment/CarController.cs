@@ -130,8 +130,11 @@ public class CarController : UnitController {
         {
             total += fit;
         }
-        if (fitnesses.Count > 0) return total /= fitnesses.Count;
-        else return 0f;
+        total /= fitnesses.Count;
+        fitnesses = new List<float>();
+
+        return total;
+
 
     }
 
