@@ -77,7 +77,6 @@ public class Optimizer : MonoBehaviour {
 
     public void StartEA()
     {
-        trackLoader.started = true;
         _ea = experiment.CreateEvolutionAlgorithm(popFileSavePath);
         startTime = DateTime.Now;
 
@@ -89,6 +88,7 @@ public class Optimizer : MonoBehaviour {
         Time.timeScale = evoSpeed;       
         _ea.StartContinue();
         EARunning = true;
+        trackLoader.startLoader();
     }
 
     void ea_UpdateEvent(object sender, EventArgs e)
@@ -98,11 +98,6 @@ public class Optimizer : MonoBehaviour {
 
         Fitness = _ea.Statistics._maxFitness;
         Generation = _ea.CurrentGeneration;
-      
-
-    //    Utility.Log(string.Format("Moving average: {0}, N: {1}", _ea.Statistics._bestFitnessMA.Mean, _ea.Statistics._bestFitnessMA.Length));
-
-    
     }
 
     void ea_PauseEvent(object sender, EventArgs e)

@@ -11,7 +11,10 @@ public class TrackLoader : MonoBehaviour {
     public bool started = false;
     private int trackManIterations = 0;
     public int neatIterations = 0;
-    public FU2POP trackPopulation;
+    private int parity = 0;
+    private int populationSize = 20;
+    public int geneLength = 20;
+    public FI2POP trackPopulation;
 
     public Optimizer optimizer;
     public GameObject[] trackPrefabs;
@@ -19,11 +22,16 @@ public class TrackLoader : MonoBehaviour {
 
 	public void Awake()
 	{
-        trackPopulation = new FU2POP(20);
-        optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
+        trackPopulation = new FI2POP(geneLength, populationSize);
+        optimizer.TrialDuration = (trackTime * (trackPopulation.feasable.Count * 2)) + 1;
 
         loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
 	}
+
+    public void startLoader()
+    {
+        started = true;
+    }
 
 
 	private void FixedUpdate()
@@ -33,24 +41,36 @@ public class TrackLoader : MonoBehaviour {
         timeLeft -= Time.deltaTime;
         if(timeLeft <= 0)
         {
-            
-            updateCarFitness();
-            updateTrackFitness();
-            currentTrack++;
 
+            updateCarFitness();
+            if (parity % 2 == 1)
+            {
+                updateTrackFitness();
+                currentTrack++;
+            }
+            parity = ++parity%2;
             timeLeft = trackTime;
             if(currentTrack >= trackPopulation.feasable.Count)
             {
-                //GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
-                //foreach (GameObject obj in objects)
-                //{
-                //    obj.GetComponent<CarController>().fitnesses = new List<float>();
-                //}
                 currentTrack = 0;
                 trackPopulation.Evolve();
-                optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
+                optimizer.TrialDuration = (trackTime * (trackPopulation.feasable.Count*2)) + 1;
             } else {
-                loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
+                int[] track = trackPopulation.feasable[currentTrack].GetGenes();
+                if(parity % 2 == 1)
+                {
+                    for (int i = 0; i < track.Length; i++)
+                    {
+                        if(track[i]%2 ==1 && track[i] < 4)
+                        {
+                            track[i]--;
+                        } else if(track[i] % 2 == 0 && track[i] < 4)
+                        {
+                            track[i]++;
+                        }
+                    }
+                }
+                loadTrack(track);
             }
             trackManIterations++;
         }
@@ -75,8 +95,18 @@ public class TrackLoader : MonoBehaviour {
             fitness += obj.GetComponent<CarController>().lastProgress;
             float timeLastCompleted = obj.GetComponent<CarController>().lastTimeCompleted;
             fitness += timeLastCompleted <= Mathf.Epsilon ? 0f : (1f - obj.GetComponent<CarController>().lastTimeCompleted);
+            obj.GetComponent<CarController>().lastProgress = 0;
+            obj.GetComponent<CarController>().lastTimeCompleted = 0;
         }
         fitness /= objects.Length;
+        if(trackPopulation.feasable.Count == 0)
+        {
+            print("oops");
+        }
+        if (currentTrack > trackPopulation.feasable.Count)
+        {
+            print("oops");
+        }
         trackPopulation.feasable[currentTrack].SetFitness(fitness);
     }
 

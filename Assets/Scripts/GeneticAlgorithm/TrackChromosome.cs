@@ -6,7 +6,7 @@ public class TrackChromosome{
 
     private static int max_gene = 4;
     private int[] genes;
-    private float fitness;
+    private float fitness = 0f;
     private bool is_feasable;
 
     public TrackChromosome(int size){

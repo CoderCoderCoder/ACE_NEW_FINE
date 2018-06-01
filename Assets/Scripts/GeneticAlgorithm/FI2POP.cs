@@ -2,24 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FU2POP
+public class FI2POP
 {
 
-    public static int pop_size = 20;
+    public static int pop_size;
+    public static int chromosome_length;
     public List<TrackChromosome> pop;
 
     public List<TrackChromosome> feasable = new List<TrackChromosome>();
     public List<TrackChromosome> unfeasable = new List<TrackChromosome>();
 
-    public FU2POP(int track_length)
+    public FI2POP(int track_length, int _pop_size)
     {
         pop = new List<TrackChromosome>();
+        pop_size = _pop_size;
+        chromosome_length = track_length;
 
         for (int i = 0; i < pop_size; i++)
         {
-            pop.Add(new TrackChromosome(track_length));
+            pop.Add(new TrackChromosome(chromosome_length));
         }
-        FeasibilityCheck();
+        bool hasFeasibilePop = false;
+        while (!hasFeasibilePop)
+        {
+            hasFeasibilePop = FeasibilityCheck();
+            if (!hasFeasibilePop)
+            {
+                pop.Clear();
+                for (int i = 0; i < pop_size; i++)
+                {
+                    pop.Add(new TrackChromosome(chromosome_length));
+                }
+            }
+        }
+
     }
 
     public void SetIsFeasable(bool isFeasable, int index)
@@ -33,7 +49,7 @@ public class FU2POP
     }
 
 
-    public void FeasibilityCheck()
+    public bool FeasibilityCheck()
     {
 
         // check feasibility
@@ -53,6 +69,7 @@ public class FU2POP
                 unfeasable.Add(pop[i]);
             }
         }
+        return feasable.Count > 0;
     }
 
     public void Evolve()
@@ -72,7 +89,19 @@ public class FU2POP
         feasable.Clear();
         unfeasable.Clear();
 
-        FeasibilityCheck();
+        bool hasFeasibilePop = false;
+        while (!hasFeasibilePop)
+        {
+            hasFeasibilePop = FeasibilityCheck();
+            if (!hasFeasibilePop)
+            {
+                pop.Clear();
+                for (int i = 0; i < pop_size; i++)
+                {
+                    pop.Add(new TrackChromosome(chromosome_length));
+                }
+            }
+        }
 
     }
 

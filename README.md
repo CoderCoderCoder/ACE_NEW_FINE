@@ -1,8 +1,8 @@
-# ACE! NEW! FINE?
+# ACE? NEW? FINE?
 
-Welcome to ACE! NEW! FINE?
+Welcome to ACE? NEW? FINE?
 
-What is 'ACE! NEW! FINE?'? It is a 'brand new' (tm, full literature review not completed!) algorithm which incorporates a ton of techniques talked about this week. It stands for:
+What is 'ACE? NEW? FINE?'? It is a 'brand new' (tm, full literature review not completed!) algorithm which incorporates a ton of techniques talked about this week. It stands for:
 
 "Adversarial Co-Evolution of Neuro-Evolution with Feasible-Infeasible Evolution"
 
@@ -39,7 +39,7 @@ But enough with the boring stuff!
 The FI2POP algorithm separates the broken tracks from the ones that we can actually play, the poor NEAT cars really want to show how they are poor at driving, right? Basically any chromosome that describes a track that overlaps with itself is labeld as infeasible and segregatet in the bad-boy club. To check for overlaps we start building the track from the first gene and then procede gene-by-gene, as soon as we find a gene that overlaps with a previous one, the chromosome is marked as unfeasible!
 
 ## Running this tech demo
-If you want to run this tech demo and see ACE! NEW! FINE? for yourself download this repo, open it in Unity (it was developed in 2018.1.1), load the scene (there is only one), run and then once the game has started press "Start EA". 
+If you want to run this tech demo and see ACE? NEW? FINE? for yourself download this repo, open it in Unity (it was developed in 2018.1.1), load the scene (there is only one), run and then once the game has started press "Start EA". 
 
 ## Team
 

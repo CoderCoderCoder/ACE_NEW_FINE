@@ -11,6 +11,7 @@ public class CarController : UnitController {
     public int CurrentPiece, LastPiece;
     public float progress;
     public float timeCompleted = 0;
+    public int trackLength = 17;
 
     public float lastProgress;
     public float lastTimeCompleted;
@@ -24,6 +25,8 @@ public class CarController : UnitController {
 
 	// Use this for initialization
 	void Start () {
+        GameObject trackLoader =  GameObject.Find("TrackLoader");
+        trackLength = trackLoader.GetComponent<TrackLoader>().geneLength;
 	
 	}
 	
@@ -143,11 +146,11 @@ public class CarController : UnitController {
         print("storing current fitness");
         int piece = CurrentPiece;
 
-        progress = CurrentPiece / 14f;
+        progress = CurrentPiece / (float)trackLength;
 
         fitnesses.Add(timeCompleted + progress);
-        lastTimeCompleted = timeCompleted;
-        lastProgress = progress;
+        lastTimeCompleted += timeCompleted;
+        lastProgress += progress;
     }
 
     void OnCollisionEnter(Collision collision)
