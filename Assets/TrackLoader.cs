@@ -41,13 +41,13 @@ public class TrackLoader : MonoBehaviour {
             timeLeft = trackTime;
             if(currentTrack >= trackPopulation.feasable.Count)
             {
-                //TODO: if currentTrack > length of track pop then generate next pop 
                 GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
                 foreach (GameObject obj in objects)
                 {
                     obj.GetComponent<CarController>().fitnesses = new List<float>();
                 }
                 currentTrack = 0;
+                trackPopulation.Evolve();
                 optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
             } else {
                 loadTrack(trackPopulation.feasable[currentTrack].GetGenes());
