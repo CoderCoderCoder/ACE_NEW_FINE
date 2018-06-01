@@ -33,14 +33,20 @@ public class TrackLoader : MonoBehaviour {
         timeLeft -= Time.deltaTime;
         if(timeLeft <= 0)
         {
-            currentTrack++;
+            
             updateCarFitness();
             updateTrackFitness();
+            currentTrack++;
 
             timeLeft = trackTime;
             if(currentTrack >= trackPopulation.feasable.Count)
             {
-                //if currentTrack > length of track pop then generate next pop 
+                //TODO: if currentTrack > length of track pop then generate next pop 
+                GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
+                foreach (GameObject obj in objects)
+                {
+                    obj.GetComponent<CarController>().fitnesses = new List<float>();
+                }
                 currentTrack = 0;
                 optimizer.TrialDuration = (trackTime * trackPopulation.feasable.Count) + 1;
             } else {
@@ -62,7 +68,15 @@ public class TrackLoader : MonoBehaviour {
 
     private void updateTrackFitness()
     {
-
+        float fitness = 0f;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("Car");
+        foreach (GameObject obj in objects)
+        {
+            fitness += obj.GetComponent<CarController>().lastProgress;
+            fitness += obj.GetComponent<CarController>().lastTimeCompleted;
+        }
+        fitness /= objects.Length;
+        trackPopulation.feasable[currentTrack].SetFitness(fitness);
     }
 
     private void loadTrack(int[] track)

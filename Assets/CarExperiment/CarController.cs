@@ -11,10 +11,13 @@ public class CarController : UnitController {
     public int CurrentPiece, LastPiece;
     public float progress;
     public float timeCompleted = 0;
+
+    public float lastProgress;
+    public float lastTimeCompleted;
     bool MovingForward = true;
     bool IsRunning;
     public float SensorRange = 10;
-    public List<float> fitness = new List<float>();
+    public List<float> fitnesses = new List<float>();
     int WallHits; 
     IBlackBox box;
 
@@ -123,11 +126,11 @@ public class CarController : UnitController {
     {
         float total = 0.0f;
 
-        foreach(float fit in fitness)
+        foreach(float fit in fitnesses)
         {
             total += fit;
         }
-        if (fitness.Count > 0) return total /= fitness.Count;
+        if (fitnesses.Count > 0) return total /= fitnesses.Count;
         else return 0f;
 
     }
@@ -139,7 +142,9 @@ public class CarController : UnitController {
 
         progress = CurrentPiece / 14f;
 
-        fitness.Add(timeCompleted + progress);
+        fitnesses.Add(timeCompleted + progress);
+        lastTimeCompleted = timeCompleted;
+        lastProgress = progress;
     }
 
     void OnCollisionEnter(Collision collision)
