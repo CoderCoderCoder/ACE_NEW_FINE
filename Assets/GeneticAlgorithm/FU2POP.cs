@@ -110,7 +110,6 @@ public class FU2POP
             {
                 new_pop.Add(crossed[1]);
             }
-
         }
 
         for (int i = 0; i < new_size; i++)
